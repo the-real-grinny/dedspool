@@ -17,7 +17,7 @@ Invoke-Command -Session $ses -ScriptBlock {
         Write-Host "it dun broke"
     }
 }
-Get-PSSession # debug
+#Get-PSSession # debug
 Invoke-Expression -Command "Get-PSSession | Remove-PSSession"
 #Set-Location U:\
 Exit 0
