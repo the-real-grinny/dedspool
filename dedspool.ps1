@@ -1,8 +1,9 @@
 ﻿# Clear all sessions
-Invoke-Expression -Command "Get-PSSession | Remove-PSSession"
+#Invoke-Expression -Command "Get-PSSession | Remove-PSSession"
 $cred = Get-Credential # Set up a new credential
-$ses = New-PSSession -Computername PRINTSRV -Credential $cred # Set up session with credentials
-Enter-PSSession $ses # creates interactive session
+$ses = New-PSSession -Computername PRINTSRV -Credential $cred -Name "dedspool"# Set up session with credentials
+#Enter-PSSession $ses # creates interactive session
+Invoke-Command -Session $ses -ScriptBlock {
     try {
         Write-Host "Stopping spooler"
         Stop-Service -Force -Name "Spooler"
@@ -15,5 +16,8 @@ Enter-PSSession $ses # creates interactive session
         Write-Host $error
         Write-Host "it dun broke"
     }
-#Invoke-Expression -Command "Get-PSSession | Remove-PSSession"
-#Exit
+}
+Get-PSSession # debug
+Invoke-Expression -Command "Get-PSSession | Remove-PSSession"
+#Set-Location U:\
+Exit 0
